@@ -32,13 +32,11 @@ app.post('/register', (req, res) => {
   if (!uppercaseRegex.test(password)) {
     return res.status(400).json({ message: 'Password should contain at least one uppercase letter' });
   }
-  if(confirmpass != password){
-    return res.status(400).json({ message: 'Confirmpassword should be the same as Password' });
-  }
+  
   
   const newUser = { user: account.length + 1, id, password };
   account.push(newUser);
-  res.status(201).json({ message: 'register successfully !!!!!!' });
+  res.status(200).json({ message: 'register successfully !!!!!!' });
 });
 
 
