@@ -18,26 +18,20 @@ app.post('/register', (req, res) => {
   if (!id || !password) {
     return res.status(400).json({ message: 'id and password are required' });
   }
-  
   const existingUser = account.find(user => user.id === id);
   if (existingUser) {
     return res.status(400).json({ message: 'id already exists' }); 
   }
-  
   if (id.length < 6) {
     return res.status(400).json({ message: 'id should be at least 6 characters long' });
   }
-  
   if (password.length < 6) {
     return res.status(400).json({ message: 'Password should be at least 6 characters long' });
   }
-  
-  
   const uppercaseRegex = /[A-Z]/;
   if (!uppercaseRegex.test(password)) {
     return res.status(400).json({ message: 'Password should contain at least one uppercase letter' });
   }
-
   if(confirmpass != password){
     return res.status(400).json({ message: 'Confirmpassword should be the same as Password' });
   }
@@ -66,7 +60,6 @@ app.post('/login', (req, res) => {
 
   res.status(200).json({ message: 'Login successful' });
 });
-  
 
 app.get('/account', (req, res) => {
   res.status(200).json(account);  
@@ -86,7 +79,7 @@ let balance = 0;
 app.post('/deposit', (req, res) => {
   const  amount  = parseInt(req.query.amount);
   if (!amount || isNaN(amount) || amount <= 0) {
-    return res.status(400).json({ message: 'Invalid amount for deposit' });
+    return res.status(400).json({ message: 'Invalid amount' });
   }
 
   balance = balance + amount;
