@@ -116,7 +116,7 @@ test('HTTP status codes', async () => {
 });
 
 
-
+///////////////////////////////////////////// Idempotent ///////////////////////////////////////////////////////////
 test('Idempotent property', async () => {
   // Mocking a request that returns the same data on multiple calls
   mock.onGet(`${BASE_URL}/idempotent`).reply(200, { id: 'data1' });
@@ -129,6 +129,8 @@ test('Idempotent property', async () => {
   expect(response1.data).toEqual(response2.data);
 });
 
+
+///////////////////////////////////////////// Safe ///////////////////////////////////////////////////////////
 test('Safe property', async () => {
   // Mocking a safe request that does not change server state
   mock.onGet(`${BASE_URL}/safe`).reply(200, { message: 'This is a safe request' });
@@ -141,6 +143,7 @@ test('Safe property', async () => {
   expect(response.data.message).toBe('This is a safe request');
 });
 
+///////////////////////////////////////////// Functional ///////////////////////////////////////////////////////////
 test('Functional testing', async () => {
   // Mocking a translation API that translates Thai to English
   mock.onPost(`${BASE_URL}/translate`).reply(200, { translated_text: 'Hello' });
