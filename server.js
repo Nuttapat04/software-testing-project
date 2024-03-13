@@ -52,16 +52,16 @@ app.post('/login', (req, res) => {
   const { id, password } = req.query;
 
   if (!id) {
-    return res.status(401).json({ message: 'Invalid id' });
+    return res.status(401).json({ message: 'Invalid id or password' });
   }
 
   const user = account.find(user => user.id === id);
   if (!user) {
-    return res.status(401).json({ message: 'Invalid id' });
+    return res.status(401).json({ message: 'Invalid id or password' });
   }
 
   if (!password || user.password !== password) {
-    return res.status(401).json({ message: 'Invalid password' });
+    return res.status(401).json({ message: 'Invalid id or password' });
   }
 
   res.status(200).json({ message: 'Login successful' });
@@ -82,6 +82,33 @@ app.get('/account/:user', (req, res) => {
 });
 
 
+let balance = 0;
+app.post('/deposit', (req, res) => {
+  const  amount  = parseInt(req.query.amount);
+  if (!amount || isNaN(amount) || amount <= 0) {
+    return res.status(400).json({ message: 'Invalid amount for deposit' });
+  }
+
+  balance = balance + amount;
+  res.status(200).json({ message: 'Deposit successful', balance });
+});
+app.post('/withdraw', (req, res) => {
+  const  amount  = parseInt(req.query.amount);
+  if (!amount || amount <= 0 || isNaN(amount)) {
+    return res.status(400).json({ message: 'Invalid amount' });
+  }
+
+  if (amount > balance) {
+    return res.status(400).json({ message: 'Amount should be less than Balance' });
+  }
+
+  balance = balance - amount;
+  res.status(200).json({ message: 'Withdraw succeed', balance });
+});
+app.get('/balance', (req, res) => {
+  res.status(200).json({ balance });
+});
+// Start the server
 app.listen(port, () => {
   console.log(`Server is listening at http://localhost:${port}`);
 });
