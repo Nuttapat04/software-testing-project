@@ -5,7 +5,6 @@ const BASE_URL = 'http://localhost:3000';
 const mock = new MockAdapter(axios);
 const app = require('./server');
 
-
 //////////////////////////////////////////   Authentication   /////////////////////////////////////////////////
 test('Valid login: Valid username, Valid Password', async () => {
   // Mocking a valid login response
@@ -35,7 +34,6 @@ test('Invalid login: Invalid password', async () => {
     expect(error.response.status).toBe(401);
   }
 });
-
 
 test('Unauthorized access: Missing username', async () => {
   try {
@@ -86,7 +84,6 @@ test('Unauthorized access: Account disabled', async () => {
   }
 });
 
-
 test('Unauthorized access: Account expired', async () => {
   try {
     await axios.post(`${BASE_URL}/login`, { username: 'expired_user', password: 'password123' });
@@ -115,7 +112,6 @@ test('HTTP status codes', async () => {
   expect(responses[0].status).toBe(200);
 });
 
-
 ///////////////////////////////////////////// Idempotent ///////////////////////////////////////////////////////////
 test('Idempotent property', async () => {
   // Mocking a request that returns the same data on multiple calls
@@ -128,7 +124,6 @@ test('Idempotent property', async () => {
   // Expecting the same data
   expect(response1.data).toEqual(response2.data);
 });
-
 
 ///////////////////////////////////////////// Safe ///////////////////////////////////////////////////////////
 test('Safe property', async () => {
